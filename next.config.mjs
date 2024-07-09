@@ -1,4 +1,27 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+const isReal = process.env.NODE_ENV === 'production';
 
-export default nextConfig;
+const images = {
+  remotePatterns: [
+    {
+      protocol: 'https',
+      hostname: 'via.placeholder.com',
+      port: '',
+      pathname: '/**',
+    },
+  ],
+};
+
+const nextConfig = {
+  images,
+  compiler: {
+    removeConsole: {
+      exclude: ['error', 'debug'],
+    },
+  },
+};
+
+const nextConfigDev = {
+  images,
+};
+
+export default isReal ? nextConfig : nextConfigDev;
